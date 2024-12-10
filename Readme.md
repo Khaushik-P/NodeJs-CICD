@@ -70,10 +70,14 @@ The repository contains the following key files:
 
 ### Steps to Set Up the Jenkins Pipeline
 1. **Add the `Jenkinsfile`** to your Git repository.
-2. **Create a new pipeline job** in Jenkins:
+2. **Create a new multibranch pipeline job** in Jenkins:
    - Navigate to Jenkins Dashboard > `New Item`.
-   - Choose `Pipeline` and name it appropriately.
-   - Configure the job by linking it to the repository where the `Jenkinsfile` is located.
+   - Choose `Multibranch Pipeline` and name it appropriately.
+   - Configure the job to scan branches in your repository that contain a `Jenkinsfile`.
+3. **Configure Branch Sources**:
+   - Add your GitHub repository as a source.
+   - Set up the appropriate credentials (e.g., GitHub token) for accessing the repository.
+   - Configure the `Jenkinsfile` path if necessary, ensuring it is detected in each branch.
 
 ### Set Up Jenkins Credentials
 Ensure the following Jenkins credentials are configured:
@@ -81,6 +85,7 @@ Ensure the following Jenkins credentials are configured:
 - **GitHub**: Create a credential with the ID `github` for source code access and Git operations.
 - **SonarQube**: Set up a credential with the ID `sonar-scanner` for SonarQube analysis.
 - **Git Username/Password**: Add credentials for pushing changes to the repository if needed.
+
 
 ## 3. Build and Deploy Pipeline
 
