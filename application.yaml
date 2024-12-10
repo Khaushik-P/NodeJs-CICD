@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nodejs-hello-world
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/Khaushik-P/NodeJs-CICD"
+    targetRevision: HEAD
+    path: .
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default # Replace with the appropriate namespace where you want to deploy
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
