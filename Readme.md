@@ -66,46 +66,38 @@ The repository contains the following key files:
   kubectl apply -f deployment.yaml
 
 
-2. Configure Jenkins Pipeline
-Add the Jenkinsfile to your Jenkins job.
-Create and configure the pipeline job in Jenkins.
-Set up the following Jenkins credentials:
-Docker Hub: docker-hub-credentials
-GitHub: github
-SonarQube: sonar-scanner
-Git Username/Password for pushing changes.
-3. Build and Deploy Pipeline
-Commit and Push the code to the repository.
-Run the Jenkins Pipeline. This triggers the following stages:
-Code checkout
-Installation and testing
-Build and push Docker image
-Image scanning
-Deployment manifest update and commit
-Deployment to Kubernetes
-4. Verify Deployment
-Use the following command to check the status of the deployment:
-bash
-Copy code
+## 2. Configure Jenkins Pipeline
+
+### Steps to Set Up the Jenkins Pipeline
+1. **Add the `Jenkinsfile`** to your Git repository.
+2. **Create a new pipeline job** in Jenkins:
+   - Navigate to Jenkins Dashboard > `New Item`.
+   - Choose `Pipeline` and name it appropriately.
+   - Configure the job by linking it to the repository where the `Jenkinsfile` is located.
+
+### Set Up Jenkins Credentials
+Ensure the following Jenkins credentials are configured:
+- **Docker Hub**: Create a credential with the ID `docker-hub-credentials` for Docker image pushes.
+- **GitHub**: Create a credential with the ID `github` for source code access and Git operations.
+- **SonarQube**: Set up a credential with the ID `sonar-scanner` for SonarQube analysis.
+- **Git Username/Password**: Add credentials for pushing changes to the repository if needed.
+
+## 3. Build and Deploy Pipeline
+
+### Running the Jenkins Pipeline
+1. **Commit and Push the Code**:
+   - Push your code to the repository, including the `Jenkinsfile` and deployment configuration files.
+2. **Run the Jenkins Pipeline**:
+   - Trigger the pipeline manually or set up automated triggers (e.g., webhook for GitHub).
+   - The pipeline will proceed through the following stages:
+     - **Code Checkout**: Pulls the latest code from the repository.
+     - **Installation and Testing**: Runs `npm install` and `npm test` to ensure the application is working correctly.
+     - **Build and Push Docker Image**: Builds the Docker image using the `Dockerfile` and pushes it to Docker Hub.
+     - **Image Scanning**: Uses `Trivy` to scan the Docker image for vulnerabilities.
+     - **Deployment Manifest Update and Commit**: Updates the `deployment.yaml` file with the new image tag and commits it back to the repository.
+     - **Deployment to Kubernetes**: Applies the updated deployment using `kubectl` to deploy the changes to the Kubernetes cluster.
+
+## 4. Verify Deployment
+To check the status of your deployment, run the following command in your terminal:
+```bash
 kubectl get deployments
-Notifications
-The pipeline sends notifications to a configured Slack channel using the slackSend function based on build status, providing real-time updates.
-
-Security Considerations
-Image Scanning: The Trivy stage scans the Docker image for vulnerabilities before deployment.
-Secrets Management: Ensure credentials used in Jenkins are stored securely.
-Requirements
-Jenkins Plugins: Docker, GitHub, Slack, SonarQube.
-Kubernetes Cluster: Access configured with kubectl.
-ArgoCD: Deployed and connected to Kubernetes.
-Docker Hub: Account for storing images.
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Notes
-Update the placeholders like github-username and github-email in the Jenkinsfile with actual values.
-Ensure your Docker Hub repository exists and you have the required permissions.
-vbnet
-Copy code
-
-This `README.md` explains the components, setup steps, and detailed instructions to deploy your N
