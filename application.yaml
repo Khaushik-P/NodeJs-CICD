@@ -8,13 +8,11 @@ spec:
   source:
     repoURL: "https://github.com/Khaushik-P/NodeJs-CICD"
     targetRevision: HEAD
-    path: .
+    path: "."
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: default # Replace with the appropriate namespace where you want to deploy
+    namespace: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
